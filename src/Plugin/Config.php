@@ -28,7 +28,7 @@ class Config
      */
     public static $defaultConfig = [
         'web-dir' => 'web',
-        'prepare-web-dir' => true,
+        'prepare-web-dir' => false,
         // The following values are for internal use only and does not represent public API
         // Names and behaviour of these values might change without notice
         'composer-mode' => true,
