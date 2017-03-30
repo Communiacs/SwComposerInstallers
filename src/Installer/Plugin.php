@@ -65,6 +65,11 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         $composer
             ->getInstallationManager()
             ->addInstaller(
+                new CoreInstaller($io, $composer, $filesystem, $pluginConfig, $binaryInstaller)
+            );
+        $composer
+            ->getInstallationManager()
+            ->addInstaller(
                 new ExtensionInstaller($io, $composer, $filesystem, $pluginConfig, $binaryInstaller)
             );
 

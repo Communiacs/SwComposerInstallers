@@ -31,12 +31,12 @@ use Wlwwt\Sw\Composer\Plugin\Util\Filesystem;
  * @author Thomas Maroschik <tmaroschik@dfau.de>
  * @author Helmut Hummel <info@helhum.io>
  */
-class ExtensionInstaller implements InstallerInterface, BinaryPresenceInterface
+class CoreInstaller implements InstallerInterface, BinaryPresenceInterface
 {
     /**
      * @var string
      */
-    protected $extensionDir;
+    protected $coreDir;
 
     /**
      * @var Composer
@@ -78,7 +78,7 @@ class ExtensionInstaller implements InstallerInterface, BinaryPresenceInterface
         $this->filesystem = $filesystem;
         $this->binaryInstaller = $binaryInstaller;
         $this->pluginConfig = $pluginConfig;
-        $this->extensionDir = $this->filesystem->normalizePath($pluginConfig->get('web-dir')) . '/custom/plugins/';
+        $this->coreDir = $this->filesystem->normalizePath($pluginConfig->get('web-dir'));
     }
 
     /**
@@ -89,8 +89,8 @@ class ExtensionInstaller implements InstallerInterface, BinaryPresenceInterface
      */
     public function supports($packageType)
     {
-        return $packageType !== 'shopware-core'
-            && strncmp('shopware-', $packageType, 9) === 0;
+        return $packageType == 'shopware-core'
+            && strncmp('shopware-core', $packageType, 13) === 0;
     }
 
     /**
@@ -176,8 +176,7 @@ class ExtensionInstaller implements InstallerInterface, BinaryPresenceInterface
      */
     public function getInstallPath(PackageInterface $package)
     {
-        $extensionInstallDir = $this->resolveExtensionKey($package);
-        return $this->extensionDir . DIRECTORY_SEPARATOR . $extensionInstallDir;
+        return $this->coreDir;
     }
 
     /**
@@ -201,34 +200,6 @@ class ExtensionInstaller implements InstallerInterface, BinaryPresenceInterface
         $this->binaryInstaller->installBinaries($package, $this->getInstallPath($package));
     }
 
-    /**
-     * Resolves the extension key from replaces or package name
-     *
-     * @param PackageInterface $package
-     * @return string
-     */
-    protected function resolveExtensionKey(PackageInterface $package)
-    {
-        foreach ($package->getReplaces() as $packageName => $version) {
-            if (strpos($packageName, '/') === false) {
-                $extensionKey = trim($packageName);
-                break;
-            }
-        }
-        if (empty($extensionKey)) {
-            list(, $extensionKey) = explode('/', $package->getName(), 2);
-            $extensionKey = str_replace('-', '_', $extensionKey);
-        }
-        $extra = $package->getExtra();
-        if (!empty($extra)) {
-            if (!empty($extra['installer-name'])) {
-                $extensionKey = $extra['installer-name'];
-            } elseif (!empty($extra['shopware/shopware']['extensionKey'])) {
-                $extensionKey = $extra['shopware/shopware']['extensionKey'];
-            }
-        }
-        return $extensionKey;
-    }
 
     /**
      * @param PackageInterface $package
