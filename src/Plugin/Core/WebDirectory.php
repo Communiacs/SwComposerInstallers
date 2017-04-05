@@ -69,8 +69,8 @@ class WebDirectory
      */
     private function initializeSymlinks()
     {
-        if ($this->composer->getPackage()->getName() === 'shopware/shopware') {
-            // Nothing to do shopware/shopware is root package
+        if ($this->composer->getPackage()->getName() === 'wlwwt/shopware') {
+            // Nothing to do wlwwt/shopware is root package
             return;
         }
         if ($this->pluginConfig->get('prepare-web-dir') === false) {
@@ -93,7 +93,7 @@ class WebDirectory
     private function determineInstallPath()
     {
         $localRepository = $this->composer->getRepositoryManager()->getLocalRepository();
-        $package = $localRepository->findPackage('shopware/shopware', new EmptyConstraint());
+        $package = $localRepository->findPackage('wlwwt/shopware', new EmptyConstraint());
         return $this->composer->getInstallationManager()->getInstallPath($package);
     }
 }

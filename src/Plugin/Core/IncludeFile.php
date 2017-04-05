@@ -62,7 +62,7 @@ class IncludeFile
 
     public function register()
     {
-        $this->io->writeError('<info>Register shopware/shopware-composer-installer file in root package autoload definition</info>', true, IOInterface::VERBOSE);
+        $this->io->writeError('<info>Register wlwwt/shopware-composer-installer file in root package autoload definition</info>', true, IOInterface::VERBOSE);
 
         // Generate and write the file
         $includeFile = $this->filesystem->normalizePath(dirname(dirname(dirname(__DIR__))) . self::RESOURCES_PATH . '/' . self::INCLUDE_FILE);

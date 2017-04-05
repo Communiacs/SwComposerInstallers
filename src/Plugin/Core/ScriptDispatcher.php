@@ -30,7 +30,7 @@ class ScriptDispatcher
     public function executeScripts()
     {
         if (is_callable(['Wlwwt\\Sw\\Core\\Composer\\InstallerScripts', 'setupShopware'])) {
-            $this->event->getIO()->writeError('<info>Executing shopware/shopware package scripts</info>', true, IOInterface::VERBOSE);
+            $this->event->getIO()->writeError('<info>Executing wlwwt/shopware package scripts</info>', true, IOInterface::VERBOSE);
             $this->registerLoader();
             \Wlwwt\Sw\Core\Composer\InstallerScripts::setupShopware($this->event);
             $this->unRegisterLoader();

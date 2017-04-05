@@ -49,8 +49,8 @@ class AutoloadConnector
             $this->io->writeError('<warning>To fully upgrade to the new Shopware Composer Plugin, call "composer update" again.</warning>');
         }
 
-        if ($this->composer->getPackage()->getName() === 'shopware/shopware') {
-            // Nothing to do typo3/cms is root package
+        if ($this->composer->getPackage()->getName() === 'wlwwt/shopware') {
+            // Nothing to do wlwwt/shopware is root package
             return;
         }
 
@@ -58,7 +58,7 @@ class AutoloadConnector
 
         $composerConfig = $this->composer->getConfig();
         $localRepository = $this->composer->getRepositoryManager()->getLocalRepository();
-        $package = $localRepository->findPackage('shopware/shopware', new EmptyConstraint());
+        $package = $localRepository->findPackage('wlwwt/shopware', new EmptyConstraint());
 
         $defaultVendorDir = \Composer\Config::$defaultConfig['vendor-dir'];
 
