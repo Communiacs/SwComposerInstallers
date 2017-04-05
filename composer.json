@@ -31,7 +31,7 @@
     "extra": {
         "class": "Wlwwt\\Sw\\Composer\\Installer\\Plugin",
         "branch-alias": {
-            "dev-master": "0.1.x-dev"
+            "dev-master": "0.3.x-dev"
         }
     }
 }
