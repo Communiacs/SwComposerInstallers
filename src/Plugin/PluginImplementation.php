@@ -78,7 +78,7 @@ class PluginImplementation
 
     public function preAutoloadDump()
     {
-        if ($this->composer->getPackage()->getName() === 'shopware/shopware') {
+        if ($this->composer->getPackage()->getName() === 'wlwwt/shopware') {
             // Nothing to do shopware/shopware is root package
             return;
         }

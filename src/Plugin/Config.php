@@ -62,8 +62,8 @@ class Config
     public function merge(array $config)
     {
         // Override defaults with given config
-        if (!empty($config['shopware/shopware']) && is_array($config['shopware/shopware'])) {
-            foreach ($config['shopware/shopware'] as $key => $val) {
+        if (!empty($config['wlwwt/shopware']) && is_array($config['wlwwt/shopware'])) {
+            foreach ($config['wlwwt/shopware'] as $key => $val) {
                 $this->config[$key] = $val;
             }
         }
@@ -188,7 +188,7 @@ class Config
             }
             $config->merge(
                 [
-                    'shopware/shopware' => [
+                    'wlwwt/shopware' => [
                         'vendor-dir' => $composer->getConfig()->get('vendor-dir')
                     ]
                 ]

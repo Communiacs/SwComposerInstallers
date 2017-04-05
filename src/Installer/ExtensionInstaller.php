@@ -223,8 +223,8 @@ class ExtensionInstaller implements InstallerInterface, BinaryPresenceInterface
         if (!empty($extra)) {
             if (!empty($extra['installer-name'])) {
                 $extensionKey = $extra['installer-name'];
-            } elseif (!empty($extra['shopware/shopware']['extensionKey'])) {
-                $extensionKey = $extra['shopware/shopware']['extensionKey'];
+            } elseif (!empty($extra['wlwwt/shopware']['extensionKey'])) {
+                $extensionKey = $extra['wlwwt/shopware']['extensionKey'];
             }
         }
         return $extensionKey;
