@@ -1,5 +1,5 @@
 <?php
-namespace Wlwwt\Sw\Composer\Plugin\Core;
+namespace Communiacs\Sw\Composer\Plugin\Core;
 
 use Composer\Autoload\ClassLoader;
 use Composer\IO\IOInterface;
@@ -29,10 +29,10 @@ class ScriptDispatcher
 
     public function executeScripts()
     {
-        if (is_callable(['Wlwwt\\Sw\\Core\\Composer\\InstallerScripts', 'setupShopware'])) {
-            $this->event->getIO()->writeError('<info>Executing wlwwt/shopware package scripts</info>', true, IOInterface::VERBOSE);
+        if (is_callable(['Communiacs\\Sw\\Core\\Composer\\InstallerScripts', 'setupShopware'])) {
+            $this->event->getIO()->writeError('<info>Executing communiacs/shopware package scripts</info>', true, IOInterface::VERBOSE);
             $this->registerLoader();
-            \Wlwwt\Sw\Core\Composer\InstallerScripts::setupShopware($this->event);
+            \Communiacs\Sw\Core\Composer\InstallerScripts::setupShopware($this->event);
             $this->unRegisterLoader();
         }
     }

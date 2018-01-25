@@ -1,24 +1,11 @@
 <?php
-namespace Wlwwt\Sw\Composer\Plugin\Util;
+namespace Communiacs\Sw\Composer\Plugin\Util;
 
 /**
  * An additional wrapper around filesystem
  */
 class Filesystem extends \Composer\Util\Filesystem
 {
-    /**
-     * @param array $files
-     * @return bool
-     */
-    public function allFilesExist(array $files)
-    {
-        foreach ($files as $file) {
-            if (!file_exists($file)) {
-                return false;
-            }
-        }
-        return true;
-    }
 
     /**
      * @param array $files

@@ -1,15 +1,15 @@
 <?php
-namespace Wlwwt\Sw\Composer\Plugin\Core;
+namespace Communiacs\Sw\Composer\Plugin\Core;
 
 use Composer\Composer;
 use Composer\IO\IOInterface;
 use Composer\Semver\Constraint\EmptyConstraint;
-use Wlwwt\Sw\Composer\Plugin\Util\Filesystem;
+use Communiacs\Sw\Composer\Plugin\Util\Filesystem;
 
 /**
- * Creates a symlink of the central autoload.php file in the vendor directory of the TYPO3 core package
+ * Creates a symlink of the central autoload.php file in the vendor directory of the Shopware core package
  * If symlinking is not possible, a proxy file is created, which requires the autoload file in the vendor directory
- * Nothing is done if the composer.json of typo3/cms is the root.
+ * Nothing is done if the composer.json of communiacs/shopware is the root.
  *
  */
 class AutoloadConnector
@@ -49,8 +49,8 @@ class AutoloadConnector
             $this->io->writeError('<warning>To fully upgrade to the new Shopware Composer Plugin, call "composer update" again.</warning>');
         }
 
-        if ($this->composer->getPackage()->getName() === 'wlwwt/shopware') {
-            // Nothing to do wlwwt/shopware is root package
+        if ($this->composer->getPackage()->getName() === 'communiacs/shopware') {
+            // Nothing to do communiacs/shopware is root package
             return;
         }
 
@@ -58,7 +58,7 @@ class AutoloadConnector
 
         $composerConfig = $this->composer->getConfig();
         $localRepository = $this->composer->getRepositoryManager()->getLocalRepository();
-        $package = $localRepository->findPackage('wlwwt/shopware', new EmptyConstraint());
+        $package = $localRepository->findPackage('communiacs/shopware', new EmptyConstraint());
 
         $defaultVendorDir = \Composer\Config::$defaultConfig['vendor-dir'];
 

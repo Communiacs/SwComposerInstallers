@@ -1,17 +1,17 @@
 <?php
-namespace Wlwwt\Sw\Composer\Plugin;
+namespace Communiacs\Sw\Composer\Plugin;
 
 use Composer\Composer;
 use Composer\Script\Event;
-use Wlwwt\Sw\Composer\Plugin\Config as PluginConfig;
-use Wlwwt\Sw\Composer\Plugin\Core\AutoloadConnector;
-use Wlwwt\Sw\Composer\Plugin\Core\IncludeFile;
-use Wlwwt\Sw\Composer\Plugin\Core\IncludeFile\BaseDirToken;
-use Wlwwt\Sw\Composer\Plugin\Core\IncludeFile\ComposerModeToken;
-use Wlwwt\Sw\Composer\Plugin\Core\IncludeFile\WebDirToken;
-use Wlwwt\Sw\Composer\Plugin\Core\ScriptDispatcher;
-use Wlwwt\Sw\Composer\Plugin\Core\WebDirectory;
-use Wlwwt\Sw\Composer\Plugin\Util\Filesystem;
+use Communiacs\Sw\Composer\Plugin\Config as PluginConfig;
+use Communiacs\Sw\Composer\Plugin\Core\AutoloadConnector;
+use Communiacs\Sw\Composer\Plugin\Core\IncludeFile;
+use Communiacs\Sw\Composer\Plugin\Core\IncludeFile\BaseDirToken;
+use Communiacs\Sw\Composer\Plugin\Core\IncludeFile\ComposerModeToken;
+use Communiacs\Sw\Composer\Plugin\Core\IncludeFile\WebDirToken;
+use Communiacs\Sw\Composer\Plugin\Core\ScriptDispatcher;
+use Communiacs\Sw\Composer\Plugin\Core\WebDirectory;
+use Communiacs\Sw\Composer\Plugin\Util\Filesystem;
 
 class PluginImplementation
 {
@@ -78,8 +78,8 @@ class PluginImplementation
 
     public function preAutoloadDump()
     {
-        if ($this->composer->getPackage()->getName() === 'wlwwt/shopware') {
-            // Nothing to do wlwwt/shopware is root package
+        if ($this->composer->getPackage()->getName() === 'communiacs/shopware') {
+            // Nothing to do, communiacs/shopware is root package
             return;
         }
         $this->includeFile->register();

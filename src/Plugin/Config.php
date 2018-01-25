@@ -1,18 +1,5 @@
 <?php
-namespace Wlwwt\Sw\Composer\Plugin;
-
-/*
- * This file is part of the TYPO3 project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
- *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
- */
+namespace Communiacs\Sw\Composer\Plugin;
 
 use Composer\Composer;
 
@@ -28,7 +15,6 @@ class Config
      */
     public static $defaultConfig = [
         'web-dir' => 'web',
-        'prepare-web-dir' => true,
         // The following values are for internal use only and does not represent public API
         // Names and behaviour of these values might change without notice
         'composer-mode' => true,
@@ -62,8 +48,8 @@ class Config
     public function merge(array $config)
     {
         // Override defaults with given config
-        if (!empty($config['wlwwt/shopware']) && is_array($config['wlwwt/shopware'])) {
-            foreach ($config['wlwwt/shopware'] as $key => $val) {
+        if (!empty($config['communiacs/shopware']) && is_array($config['communiacs/shopware'])) {
+            foreach ($config['communiacs/shopware'] as $key => $val) {
                 $this->config[$key] = $val;
             }
         }
@@ -188,7 +174,7 @@ class Config
             }
             $config->merge(
                 [
-                    'wlwwt/shopware' => [
+                    'communiacs/shopware' => [
                         'vendor-dir' => $composer->getConfig()->get('vendor-dir')
                     ]
                 ]

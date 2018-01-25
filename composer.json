@@ -1,21 +1,21 @@
 {
-    "name": "wlwwt/sw-composer-installers",
+    "name": "communiacs/sw-composer-installers",
+    "version": "0.5.0",
     "type": "composer-plugin",
     "license": "GPL-2.0+",
     "description": "Shopware Installers",
     "keywords": [
         "installer", "shopware", "core", "plugin"
     ],
-    "homepage": "https://github.com/wlwwt/SwComposerInstallers",
     "authors": [
         {
             "name": "Wolfgang Freund",
-            "email": "wolfgang.freund@wlwwt.de"
+            "email": "wf@communiacs.de"
         }
     ],
     "autoload": {
         "psr-4": {
-            "Wlwwt\\Sw\\Composer\\": "src/"
+            "Communiacs\\Sw\\Composer\\": "src/"
         }
     },
     "require": {
@@ -29,9 +29,6 @@
         "composer/composer": "^1.2"
     },
     "extra": {
-        "class": "Wlwwt\\Sw\\Composer\\Installer\\Plugin",
-        "branch-alias": {
-            "dev-master": "0.4.x-dev"
-        }
+        "class": "Communiacs\\Sw\\Composer\\Installer\\Plugin"
     }
 }

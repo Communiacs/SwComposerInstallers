@@ -1,26 +1,11 @@
 <?php
-namespace Wlwwt\Sw\Composer\Plugin\Core;
+namespace Communiacs\Sw\Composer\Plugin\Core;
 
-/*
- * This file was taken from the typo3 console plugin package.
- * (c) Helmut Hummel <info@helhum.io>
- *
- * This file is part of the TYPO3 project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
- *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
- */
 
 use Composer\Composer;
 use Composer\IO\IOInterface;
 use Composer\Util\Filesystem;
-use Wlwwt\Sw\Composer\Plugin\Core\IncludeFile\TokenInterface;
+use Communiacs\Sw\Composer\Plugin\Core\IncludeFile\TokenInterface;
 
 class IncludeFile
 {
@@ -62,7 +47,7 @@ class IncludeFile
 
     public function register()
     {
-        $this->io->writeError('<info>Register wlwwt/shopware-composer-installer file in root package autoload definition</info>', true, IOInterface::VERBOSE);
+        $this->io->writeError('<info>Register communiacs/shopware-composer-installer file in root package autoload definition</info>', true, IOInterface::VERBOSE);
 
         // Generate and write the file
         $includeFile = $this->filesystem->normalizePath(dirname(dirname(dirname(__DIR__))) . self::RESOURCES_PATH . '/' . self::INCLUDE_FILE);

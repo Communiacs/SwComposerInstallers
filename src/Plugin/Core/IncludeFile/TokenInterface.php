@@ -1,5 +1,5 @@
 <?php
-namespace Wlwwt\Sw\Composer\Plugin\Core\IncludeFile;
+namespace Communiacs\Sw\Composer\Plugin\Core\IncludeFile;
 
 interface TokenInterface
 {

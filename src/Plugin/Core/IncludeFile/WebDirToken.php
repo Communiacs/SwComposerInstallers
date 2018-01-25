@@ -1,9 +1,9 @@
 <?php
-namespace Wlwwt\Sw\Composer\Plugin\Core\IncludeFile;
+namespace Communiacs\Sw\Composer\Plugin\Core\IncludeFile;
 
 use Composer\IO\IOInterface;
 use Composer\Util\Filesystem;
-use Wlwwt\Sw\Composer\Plugin\Config as ShopwarePluginConfig;
+use Communiacs\Sw\Composer\Plugin\Config as ShopwarePluginConfig;
 
 /**
  * Class WebDirToken

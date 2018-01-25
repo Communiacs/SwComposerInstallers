@@ -1,18 +1,5 @@
 <?php
-namespace Wlwwt\Sw\Composer\Installer;
-
-/*
- * This file is part of the TYPO3 project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
- *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
- */
+namespace Communiacs\Sw\Composer\Installer;
 
 use Composer\Composer;
 use Composer\Downloader\DownloadManager;
@@ -22,15 +9,10 @@ use Composer\Installer\InstallerInterface;
 use Composer\IO\IOInterface;
 use Composer\Package\PackageInterface;
 use Composer\Repository\InstalledRepositoryInterface;
-use Wlwwt\Sw\Composer\Plugin\Config;
-use Wlwwt\Sw\Composer\Plugin\Util\Filesystem;
+use Communiacs\Sw\Composer\Plugin\Config;
+use Communiacs\Sw\Composer\Plugin\Util\Filesystem;
 
-/**
- * Enter descriptions here
- *
- * @author Thomas Maroschik <tmaroschik@dfau.de>
- * @author Helmut Hummel <info@helhum.io>
- */
+
 class CoreInstaller implements InstallerInterface, BinaryPresenceInterface
 {
     /**

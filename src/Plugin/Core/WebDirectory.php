@@ -1,11 +1,11 @@
 <?php
-namespace Wlwwt\Sw\Composer\Plugin\Core;
+namespace Communiacs\Sw\Composer\Plugin\Core;
 
 use Composer\Composer;
 use Composer\IO\IOInterface;
 use Composer\Semver\Constraint\EmptyConstraint;
-use Wlwwt\Sw\Composer\Plugin\Config;
-use Wlwwt\Sw\Composer\Plugin\Util\Filesystem;
+use Communiacs\Sw\Composer\Plugin\Config;
+use Communiacs\Sw\Composer\Plugin\Util\Filesystem;
 
 /**
  * Shopware Core installer
@@ -69,11 +69,8 @@ class WebDirectory
      */
     private function initializeSymlinks()
     {
-        if ($this->composer->getPackage()->getName() === 'wlwwt/shopware') {
-            // Nothing to do wlwwt/shopware is root package
-            return;
-        }
-        if ($this->pluginConfig->get('prepare-web-dir') === false) {
+        if ($this->composer->getPackage()->getName() === 'communiacs/shopware') {
+            // Nothing to do communiacs/shopware is root package
             return;
         }
         $this->io->writeError('<info>Establishing links to Shopware entry scripts in web directory</info>', true, IOInterface::VERBOSE);
@@ -81,11 +78,11 @@ class WebDirectory
         $webDir = $this->filesystem->normalizePath($this->pluginConfig->get('web-dir'));
         $this->filesystem->ensureDirectoryExists($webDir);
         $sourcesDir = $this->determineInstallPath();
-        $backendDir = $webDir . DIRECTORY_SEPARATOR . self::SHOPWARE_DIR;
+        //       $backendDir = $webDir . DIRECTORY_SEPARATOR . self::SHOPWARE_DIR;
 //        $this->symlinks = [
-//            $sourcesDir . DIRECTORY_SEPARATOR . self::TYPO3_INDEX_PHP
-//                => $webDir . DIRECTORY_SEPARATOR . self::TYPO3_INDEX_PHP,
-//            $sourcesDir . DIRECTORY_SEPARATOR . self::TYPO3_DIR
+//            $sourcesDir . DIRECTORY_SEPARATOR . self::SHOPWARE_INDEX_PHP
+//                => $webDir . DIRECTORY_SEPARATOR . self::SHOPWARE_INDEX_PHP,
+//            $sourcesDir . DIRECTORY_SEPARATOR . self::SHOPWARE_DIR
 //                => $backendDir
 //        ];
     }
@@ -93,7 +90,7 @@ class WebDirectory
     private function determineInstallPath()
     {
         $localRepository = $this->composer->getRepositoryManager()->getLocalRepository();
-        $package = $localRepository->findPackage('wlwwt/shopware', new EmptyConstraint());
+        $package = $localRepository->findPackage('communiacs/shopware', new EmptyConstraint());
         return $this->composer->getInstallationManager()->getInstallPath($package);
     }
 }

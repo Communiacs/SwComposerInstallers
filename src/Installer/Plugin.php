@@ -1,18 +1,6 @@
 <?php
-namespace Wlwwt\Sw\Composer\Installer;
+namespace Communiacs\Sw\Composer\Installer;
 
-/*
- * This file is part of the TYPO3 project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
- *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
- */
 
 use Composer\Composer;
 use Composer\EventDispatcher\EventSubscriberInterface;
@@ -21,15 +9,11 @@ use Composer\IO\IOInterface;
 use Composer\Plugin\PluginInterface;
 use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
-use Wlwwt\Sw\Composer\Plugin\Config;
-use Wlwwt\Sw\Composer\Plugin\PluginImplementation;
-use Wlwwt\Sw\Composer\Plugin\Util\Filesystem;
+use Communiacs\Sw\Composer\Plugin\Config;
+use Communiacs\Sw\Composer\Plugin\PluginImplementation;
+use Communiacs\Sw\Composer\Plugin\Util\Filesystem;
 
-/**
- * The plugin that registers the installers (registered by extra key in composer.json)
- *
- * @author Wolfgang Freund <wolfgang.freund@wlwwt.de>
- */
+
 class Plugin implements PluginInterface, EventSubscriberInterface
 {
     /**

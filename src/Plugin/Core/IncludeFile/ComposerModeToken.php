@@ -1,8 +1,8 @@
 <?php
-namespace Wlwwt\Sw\Composer\Plugin\Core\IncludeFile;
+namespace Communiacs\Sw\Composer\Plugin\Core\IncludeFile;
 
 use Composer\IO\IOInterface;
-use Wlwwt\Sw\Composer\Plugin\Config as PluginConfig;
+use Communiacs\Sw\Composer\Plugin\Config as PluginConfig;
 
 class ComposerModeToken implements TokenInterface
 {
