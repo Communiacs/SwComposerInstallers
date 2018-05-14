@@ -99,7 +99,7 @@ class ExtensionInstaller implements InstallerInterface, BinaryPresenceInterface
         $downloadPath = $this->getInstallPath($package);
         // Remove the binaries if it appears the package files are missing
         if (!is_readable($downloadPath) && $repo->hasPackage($package)) {
-            $this->binaryInstaller->removeBinaries($package);
+            //$this->binaryInstaller->removeBinaries($package);
         }
         $this->installCode($package);
         $this->binaryInstaller->installBinaries($package, $downloadPath);
@@ -179,7 +179,7 @@ class ExtensionInstaller implements InstallerInterface, BinaryPresenceInterface
      */
     public function installBinary(PackageInterface $package)
     {
-        $this->binaryInstaller->removeBinaries($package);
+        //$this->binaryInstaller->removeBinaries($package);
         $this->binaryInstaller->installBinaries($package, $this->getInstallPath($package));
     }
 
