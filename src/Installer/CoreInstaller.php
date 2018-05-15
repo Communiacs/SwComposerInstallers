@@ -46,6 +46,12 @@ class CoreInstaller implements InstallerInterface, BinaryPresenceInterface
     protected $binaryInstaller;
 
     /**
+     * @var array of excluded files and directories
+     */
+    protected $composerExclude;
+
+
+    /**
      * @param IOInterface $io
      * @param Composer $composer
      * @param Filesystem $filesystem
@@ -55,12 +61,15 @@ class CoreInstaller implements InstallerInterface, BinaryPresenceInterface
     public function __construct(IOInterface $io, Composer $composer, Filesystem $filesystem, Config $pluginConfig, BinaryInstaller $binaryInstaller)
     {
         $this->composer = $composer;
+
         $this->downloadManager = $composer->getDownloadManager();
 
         $this->filesystem = $filesystem;
         $this->binaryInstaller = $binaryInstaller;
         $this->pluginConfig = $pluginConfig;
         $this->coreDir = $this->filesystem->normalizePath($pluginConfig->get('web-dir'));
+
+        $this->composerExclude = $pluginConfig->get('exclude-from-composer');
     }
 
     /**
@@ -183,12 +192,49 @@ class CoreInstaller implements InstallerInterface, BinaryPresenceInterface
     }
 
 
+    protected function moveComposerExcludes($source, $dest) {
+        if( is_file($source)){
+            copy($source, $dest);
+            unlink($source);
+        } else if(is_dir($source)) {
+            mkdir($dest);
+            $dir = new \DirectoryIterator($source);
+            foreach($dir as $fileInfo){
+                if(!$fileInfo->isDot()) {
+                    // recursive call because of subdirs
+                    $this->moveComposerExcludes($source . '/' . $fileInfo->getFilename(), $dest . '/' . $fileInfo->getFilename());
+                }
+            }
+            rmdir($source);
+        }
+    }
+
     /**
      * @param PackageInterface $package
      */
     protected function installCode(PackageInterface $package)
     {
+        $backupBaseDir = $this->coreDir . '_backup';
+
+        // create backup dir if not existing
+        if(! file_exists($backupBaseDir)){
+            mkdir($backupBaseDir);
+        }
+
+        // backup files
+        foreach($this->composerExclude as $file){
+            $this->moveComposerExcludes($this->coreDir . '/' . $file, $backupBaseDir . '/' . $file );
+        }
+
         $this->downloadManager->download($package, $this->getInstallPath($package));
+
+        // restore files
+        foreach($this->composerExclude as $file){
+            $this->moveComposerExcludes($backupBaseDir . '/' . $file, $this->coreDir . '/' . $file );
+        }
+
+        // remove backup dir
+        rmdir($this->coreDir . '_backup');
     }
 
     /**
