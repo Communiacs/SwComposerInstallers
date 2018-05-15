@@ -197,6 +197,9 @@ class CoreInstaller implements InstallerInterface, BinaryPresenceInterface
             copy($source, $dest);
             unlink($source);
         } else if(is_dir($source)) {
+            if(is_dir($dest)) {
+                $this->rrmdir($dest);
+            }
             mkdir($dest);
             $dir = new \DirectoryIterator($source);
             foreach($dir as $fileInfo){
@@ -205,7 +208,7 @@ class CoreInstaller implements InstallerInterface, BinaryPresenceInterface
                     $this->moveComposerExcludes($source . '/' . $fileInfo->getFilename(), $dest . '/' . $fileInfo->getFilename());
                 }
             }
-            rmdir($source);
+            $this->rrmdir($source);
         }
     }
 
@@ -268,5 +271,20 @@ class CoreInstaller implements InstallerInterface, BinaryPresenceInterface
     protected function removeCode(PackageInterface $package)
     {
         $this->downloadManager->remove($package, $this->getInstallPath($package));
+    }
+
+    private function rrmdir($dir) {
+        if (is_dir($dir)) {
+            $objects = scandir($dir);
+            foreach ($objects as $object) {
+                if ($object != "." && $object != "..") {
+                    if (is_dir($dir."/".$object))
+                        $this->rrmdir($dir."/".$object);
+                    else
+                        unlink($dir."/".$object);
+                }
+            }
+            rmdir($dir);
+        }
     }
 }

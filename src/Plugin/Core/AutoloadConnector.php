@@ -49,8 +49,7 @@ class AutoloadConnector
             $this->io->writeError('<warning>To fully upgrade to the new Shopware Composer Plugin, call "composer update" again.</warning>');
         }
 
-        //if ($this->composer->getPackage()->getName() === 'communiacs/shopware') {
-        if ($this->composer->getPackage()->getName() === 'mdichtl/shopware') {
+        if ($this->composer->getPackage()->getName() === 'communiacs/shopware') {
             // Nothing to do communiacs/shopware is root package
             return;
         }
@@ -58,10 +57,9 @@ class AutoloadConnector
         $this->io->writeError('<info>Writing SHOPWARE autoload proxy</info>', true, IOInterface::VERBOSE);
 
         $composerConfig = $this->composer->getConfig();
-        //$localRepository = $this->composer->getRepositoryManager()->getLocalRepository();
-        //$package = $localRepository->findPackage('communiacs/shopware', new EmptyConstraint());
-        $localRepository = $this->composer->createRepository('vcs', 'https://github.com/mdichtl/shopware');
-        $package = $localRepository->findPackage('mdichtl/shopware', new EmptyConstraint());
+        $localRepository = $this->composer->getRepositoryManager()->getLocalRepository();
+        $package = $localRepository->findPackage('communiacs/shopware', new EmptyConstraint());
+
 
         $defaultVendorDir = \Composer\Config::$defaultConfig['vendor-dir'];
 
