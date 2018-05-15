@@ -49,7 +49,8 @@ class AutoloadConnector
             $this->io->writeError('<warning>To fully upgrade to the new Shopware Composer Plugin, call "composer update" again.</warning>');
         }
 
-        if ($this->composer->getPackage()->getName() === 'communiacs/shopware') {
+        //if ($this->composer->getPackage()->getName() === 'communiacs/shopware') {
+        if ($this->composer->getPackage()->getName() === 'mdichtl/shopware') {
             // Nothing to do communiacs/shopware is root package
             return;
         }
