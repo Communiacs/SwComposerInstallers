@@ -200,7 +200,7 @@ class CoreInstaller implements InstallerInterface, BinaryPresenceInterface
             if(is_dir($dest)) {
                 $this->rrmdir($dest);
             }
-            mkdir($dest);
+            mkdir($dest, 0777, true);
             $dir = new \DirectoryIterator($source);
             foreach($dir as $fileInfo){
                 if(!$fileInfo->isDot()) {
@@ -237,7 +237,7 @@ class CoreInstaller implements InstallerInterface, BinaryPresenceInterface
         }
 
         // remove backup dir
-        rmdir($this->coreDir . '_backup');
+        $this->rrmdir($this->coreDir . '_backup');
     }
 
     /**
