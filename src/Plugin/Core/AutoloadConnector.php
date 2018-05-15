@@ -58,7 +58,8 @@ class AutoloadConnector
 
         $composerConfig = $this->composer->getConfig();
         $localRepository = $this->composer->getRepositoryManager()->getLocalRepository();
-        $package = $localRepository->findPackage('communiacs/shopware', new EmptyConstraint());
+        //$package = $localRepository->findPackage('communiacs/shopware', new EmptyConstraint());
+        $package = $localRepository->findPackage('mdichtl/shopware', new EmptyConstraint());
 
         $defaultVendorDir = \Composer\Config::$defaultConfig['vendor-dir'];
 
