@@ -54,6 +54,8 @@ class ExtensionInstaller implements InstallerInterface, BinaryPresenceInterface
      */
     public function __construct(IOInterface $io, Composer $composer, Filesystem $filesystem, Config $pluginConfig, BinaryInstaller $binaryInstaller)
     {
+        print_r("ExtensionInstaller - construct");
+
         $this->composer = $composer;
         $this->downloadManager = $composer->getDownloadManager();
 
@@ -96,16 +98,18 @@ class ExtensionInstaller implements InstallerInterface, BinaryPresenceInterface
      */
     public function install(InstalledRepositoryInterface $repo, PackageInterface $package)
     {
+        print_r("ExtensionInstaller - install begin");
         $downloadPath = $this->getInstallPath($package);
         // Remove the binaries if it appears the package files are missing
         if (!is_readable($downloadPath) && $repo->hasPackage($package)) {
-            //$this->binaryInstaller->removeBinaries($package);
+            $this->binaryInstaller->removeBinaries($package);
         }
         $this->installCode($package);
         $this->binaryInstaller->installBinaries($package, $downloadPath);
         if (!$repo->hasPackage($package)) {
             $repo->addPackage(clone $package);
         }
+        print_r("ExtensionInstaller - install end");
     }
 
     /**
@@ -179,8 +183,10 @@ class ExtensionInstaller implements InstallerInterface, BinaryPresenceInterface
      */
     public function installBinary(PackageInterface $package)
     {
-        //$this->binaryInstaller->removeBinaries($package);
+        print_r("ExtensionInstaller - install binary begin");
+        $this->binaryInstaller->removeBinaries($package);
         $this->binaryInstaller->installBinaries($package, $this->getInstallPath($package));
+        print_r("ExtensionInstaller - install binary end");
     }
 
     /**
