@@ -254,15 +254,41 @@ class CoreInstaller implements InstallerInterface, BinaryPresenceInterface
             if (substr($initialDownloadPath, 0, strlen($targetDownloadPath)) === $targetDownloadPath
                 || substr($targetDownloadPath, 0, strlen($initialDownloadPath)) === $initialDownloadPath
             ) {
+                // backup files
+                foreach($this->composerExclude as $file){
+                    $this->moveComposerExcludes($this->coreDir . '/' . $file, $backupBaseDir . '/' . $file );
+                }
                 $this->removeCode($initial);
                 $this->installCode($target);
+
+                // restore files
+                foreach($this->composerExclude as $file){
+                    $this->moveComposerExcludes($backupBaseDir . '/' . $file, $this->coreDir . '/' . $file );
+                }
+
+                // remove backup dir
+                $this->rrmdir($this->coreDir . '_backup');
 
                 return;
             }
 
             $this->filesystem->rename($initialDownloadPath, $targetDownloadPath);
         }
+
+        // backup files
+        foreach($this->composerExclude as $file){
+            $this->moveComposerExcludes($this->coreDir . '/' . $file, $backupBaseDir . '/' . $file );
+        }
+
         $this->downloadManager->update($initial, $target, $targetDownloadPath);
+
+        // restore files
+        foreach($this->composerExclude as $file){
+            $this->moveComposerExcludes($backupBaseDir . '/' . $file, $this->coreDir . '/' . $file );
+        }
+
+        // remove backup dir
+        $this->rrmdir($this->coreDir . '_backup');
     }
 
     /**
