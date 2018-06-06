@@ -60,6 +60,8 @@ class CoreInstaller implements InstallerInterface, BinaryPresenceInterface
      */
     public function __construct(IOInterface $io, Composer $composer, Filesystem $filesystem, Config $pluginConfig, BinaryInstaller $binaryInstaller)
     {
+        print_r('constructor');
+        die();
         $this->composer = $composer;
 
         $this->downloadManager = $composer->getDownloadManager();
