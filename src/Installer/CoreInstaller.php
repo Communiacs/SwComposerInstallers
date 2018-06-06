@@ -60,8 +60,6 @@ class CoreInstaller implements InstallerInterface, BinaryPresenceInterface
      */
     public function __construct(IOInterface $io, Composer $composer, Filesystem $filesystem, Config $pluginConfig, BinaryInstaller $binaryInstaller)
     {
-        print_r('constructor');
-        die();
         $this->composer = $composer;
 
         $this->downloadManager = $composer->getDownloadManager();
@@ -248,8 +246,6 @@ class CoreInstaller implements InstallerInterface, BinaryPresenceInterface
      */
     protected function updateCode(PackageInterface $initial, PackageInterface $target)
     {
-        print_r("updateCode");
-        die();
         $initialDownloadPath = $this->getInstallPath($initial);
         $targetDownloadPath = $this->getInstallPath($target);
         if ($targetDownloadPath !== $initialDownloadPath) {
