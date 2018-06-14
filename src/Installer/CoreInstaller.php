@@ -246,6 +246,8 @@ class CoreInstaller implements InstallerInterface, BinaryPresenceInterface
      */
     protected function updateCode(PackageInterface $initial, PackageInterface $target)
     {
+        $backupBaseDir = $this->coreDir . '_backup';
+
         $initialDownloadPath = $this->getInstallPath($initial);
         $targetDownloadPath = $this->getInstallPath($target);
         if ($targetDownloadPath !== $initialDownloadPath) {
