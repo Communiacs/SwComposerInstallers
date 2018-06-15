@@ -248,6 +248,11 @@ class CoreInstaller implements InstallerInterface, BinaryPresenceInterface
     {
         $backupBaseDir = $this->coreDir . '_backup';
 
+        // create backup dir if not existing
+        if(! file_exists($backupBaseDir)){
+            mkdir($backupBaseDir);
+        }
+
         $initialDownloadPath = $this->getInstallPath($initial);
         $targetDownloadPath = $this->getInstallPath($target);
         if ($targetDownloadPath !== $initialDownloadPath) {
