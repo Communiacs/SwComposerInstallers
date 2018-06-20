@@ -1,6 +1,6 @@
 {
     "name": "communiacs/sw-composer-installers",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "type": "composer-plugin",
     "license": "GPL-2.0-or-later",
     "description": "Shopware Installer",
