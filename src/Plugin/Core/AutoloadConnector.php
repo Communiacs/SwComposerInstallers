@@ -46,7 +46,7 @@ class AutoloadConnector
 
     public function linkAutoLoader()
     {
-        if ($this->composer->getPackage()->getName() === 'communiacs/shopware-dev') {
+        if ($this->composer->getPackage()->getName() === 'communiacs/shopware') {
             $this->io->writeError('<info>Skipping SHOPWARE autoload proxy</info>', true, IOInterface::VERBOSE);
             return;
         }
@@ -55,7 +55,7 @@ class AutoloadConnector
 
         $composerConfig = $this->composer->getConfig();
         $localRepository = $this->composer->getRepositoryManager()->getLocalRepository();
-        $package = $localRepository->findPackage('communiacs/shopware-dev', new EmptyConstraint());
+        $package = $localRepository->findPackage('communiacs/shopware', new EmptyConstraint());
 
 
         $defaultVendorDir = Config::$defaultConfig['vendor-dir'];
