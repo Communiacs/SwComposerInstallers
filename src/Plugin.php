@@ -1,19 +1,21 @@
 <?php
-namespace Communiacs\Sw\Composer\Installer;
+namespace Communiacs\Sw\Composer;
 
 
+use Communiacs\Sw\Composer\Installer\CoreInstaller;
+use Communiacs\Sw\Composer\Plugin\Config;
+use Communiacs\Sw\Composer\Plugin\PluginImplementation;
 use Composer\Composer;
 use Composer\EventDispatcher\EventSubscriberInterface;
-use Composer\Installer\BinaryInstaller;
 use Composer\IO\IOInterface;
 use Composer\Plugin\PluginInterface;
 use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
-use Communiacs\Sw\Composer\Plugin\Config;
-use Communiacs\Sw\Composer\Plugin\PluginImplementation;
-use Communiacs\Sw\Composer\Plugin\Util\Filesystem;
 
-
+/**
+ * Class Plugin
+ * @package Communiacs\Sw\Composer\Installer
+ */
 class Plugin implements PluginInterface, EventSubscriberInterface
 {
     /**
@@ -42,19 +44,14 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     public function activate(Composer $composer, IOInterface $io)
     {
+        $io->writeError('<info>Shopware Installer: Activating the plugin</info>', true, IOInterface::VERBOSE);
+
         $this->ensureComposerConstraints($io);
-        $filesystem = new Filesystem();
-        $binaryInstaller = new BinaryInstaller($io, rtrim($composer->getConfig()->get('bin-dir'), '/'), $composer->getConfig()->get('bin-compat'), $filesystem);
         $pluginConfig = Config::load($composer);
         $composer
             ->getInstallationManager()
             ->addInstaller(
-                new CoreInstaller($io, $composer, $filesystem, $pluginConfig, $binaryInstaller)
-            );
-        $composer
-            ->getInstallationManager()
-            ->addInstaller(
-                new ExtensionInstaller($io, $composer, $filesystem, $pluginConfig, $binaryInstaller)
+                new CoreInstaller($io, $composer, $pluginConfig)
             );
 
         $composer->getEventDispatcher()->addSubscriber($this);
@@ -71,20 +68,29 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     public function listen(Event $event)
     {
+        $event->getIO()->writeError('<info>Shopware Installer: Listening for event: ' . $event->getName() . '</info>', true, IOInterface::VERBOSE);
+        $event->getIO()->writeError('<info>Shopware Installer: FILE: ' . __FILE__ . '</info>', true, IOInterface::VERY_VERBOSE);
+        $event->getIO()->writeError('<info>Shopware Installer: DIR: ' . __DIR__ . '</info>', true, IOInterface::VERY_VERBOSE);
+
         if (!empty($this->handledEvents[$event->getName()])) {
+            $event->getIO()->writeError('<info>Shopware Installer: Event already handled: ' . $event->getName() . '</info>', true, IOInterface::VERY_VERBOSE);
             return;
         }
         $this->handledEvents[$event->getName()] = true;
         // Plugin has been uninstalled
-        if (!file_exists(__FILE__) || !file_exists(dirname(__DIR__) . '/Plugin/PluginImplementation.php')) {
+        if (!file_exists(__FILE__) || !file_exists(dirname(__DIR__) . '/src/Plugin/PluginImplementation.php')) {
+            $event->getIO()->writeError('<info>Shopware Installer: Plugin uninstalled: ' . $event->getName() . '</info>', true, IOInterface::VERY_VERBOSE);
             return;
         }
 
         // Load the implementation only after updating Composer so that we get
         // the new version of the plugin when a new one was installed
         if (null === $this->pluginImplementation) {
+            $event->getIO()->writeError('<info>Shopware Installer: Creating plugin implementation: ' . $event->getName() . '</info>', true, IOInterface::VERY_VERBOSE);
             $this->pluginImplementation = new PluginImplementation($event);
         }
+
+        $event->getIO()->writeError('<info>Shopware Installer: Handling event: ' . $event->getName() . '</info>', true, IOInterface::VERY_VERBOSE);
 
         switch ($event->getName()) {
             case ScriptEvents::PRE_AUTOLOAD_DUMP:
@@ -102,8 +108,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     private function ensureComposerConstraints(IOInterface $io)
     {
         if (
-            !class_exists('Composer\\Installer\\BinaryInstaller')
-            || !interface_exists('Composer\\Installer\\BinaryPresenceInterface')
+        !interface_exists('Composer\\Installer\\BinaryPresenceInterface')
         ) {
             $io->writeError('');
             $io->writeError(sprintf('<error>Composer version (%s) you are using is too low. Please upgrade Composer to 1.2.0 or higher!</error>',

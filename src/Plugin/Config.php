@@ -4,7 +4,13 @@ namespace Communiacs\Sw\Composer\Plugin;
 use Composer\Composer;
 
 /**
- * Configuration wrapper to easily access extra configuration for installer
+ * Config wrapper that allows
+ * to access the plugin custom
+ * settings that can be set
+ * in the composer.json file
+ *
+ * Class Config
+ * @package Communiacs\Sw\Composer\Plugin
  */
 class Config
 {
