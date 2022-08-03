@@ -129,7 +129,23 @@ class CoreInstaller extends LibraryInstaller
             $this->moveComposerExcludes($from, $to);
         }
 
-        parent::updateCode($initial, $target);
+        $promise = parent::updateCode($initial, $target);
+
+        if($promise instanceof PromiseInterface) {
+            return $promise->then(function() use ($backupDir) {
+                // restore files
+                foreach($this->composerExcludes as $file){
+                    $from = $backupDir . '/' . $file;
+                    $to = $this->installDir . '/' . $file;
+
+                    $this->io->writeError('<info>Shopware Installer: Update - Restore in promise ' . $from .' to ' . $to . '</info>', true, IOInterface::VERY_VERBOSE);
+
+                    $this->moveComposerExcludes($from, $to);
+                }
+
+                $this->rmdir($backupDir);
+            });
+        }
 
         // restore files
         foreach($this->composerExcludes as $file){
