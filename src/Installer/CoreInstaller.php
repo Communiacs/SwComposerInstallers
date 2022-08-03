@@ -6,6 +6,7 @@ use Composer\Composer;
 use Composer\Installer\LibraryInstaller;
 use Composer\IO\IOInterface;
 use Composer\Package\PackageInterface;
+use React\Promise\PromiseInterface;
 
 /**
  * Installs the shopware package
@@ -74,7 +75,23 @@ class CoreInstaller extends LibraryInstaller
             $this->moveComposerExcludes($from, $to);
         }
 
-        parent::installCode($package);
+        $promise = parent::installCode($package);
+
+        if($promise instanceof PromiseInterface) {
+            return $promise->then(function () use ($backupDir) {
+                // restore files
+                foreach($this->composerExcludes as $file){
+                    $from = $backupDir . '/' . $file;
+                    $to = $this->installDir . '/' . $file;
+
+                    $this->io->writeError('<info>Shopware Installer: Install - Restore in promise ' . $from .' to ' . $to . '</info>', true, IOInterface::VERY_VERBOSE);
+
+                    $this->moveComposerExcludes($from, $to);
+                }
+
+                $this->rmdir($backupDir);
+            });
+        }
 
         // restore files
         foreach($this->composerExcludes as $file){
