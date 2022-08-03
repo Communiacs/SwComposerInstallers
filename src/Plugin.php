@@ -117,4 +117,12 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             throw new \RuntimeException('Shopware Installer disabled!', 1469105842);
         }
     }
+
+    public function deactivate(Composer $composer, IOInterface $io)
+    {
+    }
+
+    public function uninstall(Composer $composer, IOInterface $io)
+    {
+    }
 }

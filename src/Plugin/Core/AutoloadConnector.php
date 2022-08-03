@@ -5,9 +5,7 @@ use Composer\Composer;
 use Composer\Config;
 use Composer\IO\IOInterface;
 use Composer\Json\JsonFile;
-use Composer\Semver\Constraint\EmptyConstraint;
 use Composer\Util\Filesystem;
-use Composer\Util\RemoteFilesystem;
 
 /**
  * Creates a symlink of the central autoload.php file in the vendor directory of the Shopware core package
@@ -55,13 +53,13 @@ class AutoloadConnector
 
         $composerConfig = $this->composer->getConfig();
         $localRepository = $this->composer->getRepositoryManager()->getLocalRepository();
-        $package = $localRepository->findPackage('communiacs/shopware', new EmptyConstraint());
+        $package = $localRepository->findPackage('communiacs/shopware', '*');
 
 
         $defaultVendorDir = Config::$defaultConfig['vendor-dir'];
 
         $packagePath = $this->composer->getInstallationManager()->getInstallPath($package);
-        $jsonFile = new JsonFile($packagePath . DIRECTORY_SEPARATOR . 'composer.json', new RemoteFilesystem($this->io));
+        $jsonFile = new JsonFile($packagePath . DIRECTORY_SEPARATOR . 'composer.json', null, $this->io);
         $packageJson = $jsonFile->read();
         $packageVendorDir = !empty($packageJson['config']['vendor-dir']) ? $this->filesystem->normalizePath($packageJson['config']['vendor-dir']) : $defaultVendorDir;
 
